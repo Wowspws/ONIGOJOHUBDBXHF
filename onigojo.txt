@@ -1,0 +1,3699 @@
+-- LocalScript in StarterPlayerScripts or StarterCharacterScripts
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Function to play the animation
+local function playAnimation(animationId)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animation = Instance.new("Animation")
+        animation.AnimationId = "rbxassetid://" .. tostring(animationId)
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play()
+    end
+end
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("1").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Reversal Output"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("2").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Infinite Barrage"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("3").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Black Flash"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("4").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Upper Suplex"
+
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+local playerGui = player:WaitForChild("PlayerGui")
+
+local function findGuiAndSetText()
+
+    local screenGui = playerGui:FindFirstChild("ScreenGui")
+
+    if screenGui then
+
+        local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+
+        if magicHealthFrame then
+
+            local textLabel = magicHealthFrame:FindFirstChild("TextLabel")
+
+            if textLabel then
+
+                textLabel.Text = "The Honored One"
+
+            end
+
+        end
+
+    end
+
+end
+
+playerGui.DescendantAdded:Connect(findGuiAndSetText)
+ 
+findGuiAndSetText()
+
+local TweenService = game:GetService("TweenService")
+local player = game.Players.LocalPlayer
+local camera = game.Workspace.CurrentCamera
+local playerGui = player:WaitForChild("PlayerGui")
+
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+-- Duration of the cutscene and fade
+local cutsceneDuration = 1
+local fadeDuration = 1
+
+-- Create a ScreenGui and Frame for the fade effect
+local screenGui = Instance.new("ScreenGui", playerGui)
+local frame = Instance.new("Frame", screenGui)
+frame.AnchorPoint = Vector2.new(0.5, 0.5)
+frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+frame.Size = UDim2.new(900, 0, 900, 0) -- Set the size to be 900 times bigger
+frame.BackgroundColor3 = Color3.new(0, 0, 0)
+frame.BackgroundTransparency = 1
+
+-- Create a TextLabel for the "Super Saiyan" text in Chinese
+local textLabel = Instance.new("TextLabel", screenGui)
+textLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+textLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
+textLabel.Size = UDim2.new(0.2, 0, 0.1, 0)
+textLabel.BackgroundTransparency = 1
+textLabel.Text = "五条"
+textLabel.TextColor3 = Color3.new(1, 0, 0) -- Set text color to red
+textLabel.TextScaled = true
+textLabel.Font = Enum.Font.SourceSansBold
+textLabel.TextTransparency = 1
+
+-- TweenInfo for the fade effect
+local fadeInInfo = TweenInfo.new(
+    fadeDuration, -- Time
+    Enum.EasingStyle.Sine, -- EasingStyle
+    Enum.EasingDirection.InOut -- EasingDirection
+)
+
+local fadeOutInfo = TweenInfo.new(
+    fadeDuration, -- Time
+    Enum.EasingStyle.Sine, -- EasingStyle
+    Enum.EasingDirection.InOut -- EasingDirection
+)
+
+-- TweenInfo for the camera movement
+local tweenInfo = TweenInfo.new(
+    cutsceneDuration, -- Time
+    Enum.EasingStyle.Sine, -- EasingStyle
+    Enum.EasingDirection.InOut -- EasingDirection
+)
+
+-- Initial and final camera CFrame
+local initialCFrame = humanoidRootPart.CFrame * CFrame.new(0, -5, 0)
+local finalCFrame = humanoidRootPart.CFrame * CFrame.new(0, 2, 2) * CFrame.Angles(0, math.rad(180), 0)
+
+-- Create the Tween for the camera
+local cameraTween = TweenService:Create(camera, tweenInfo, {CFrame = finalCFrame})
+
+-- Create Tweens for the fade effect
+local fadeInTween = TweenService:Create(frame, fadeInInfo, {BackgroundTransparency = 0})
+local fadeOutTween = TweenService:Create(frame, fadeOutInfo, {BackgroundTransparency = 1})
+
+-- Create Tweens for the text transparency
+local textFadeInTween = TweenService:Create(textLabel, fadeInInfo, {TextTransparency = 0})
+local textFadeOutTween = TweenService:Create(textLabel, fadeOutInfo, {TextTransparency = 1})
+
+-- Function to play the camera cutscene and fade effect
+local function playCutscene()
+    -- Set initial camera position
+    camera.CFrame = initialCFrame
+    
+    -- Play the fade-in tween for the black screen and text
+    fadeInTween:Play()
+    textFadeInTween:Play()
+    fadeInTween.Completed:Wait()
+    
+    -- Play the camera tween
+    cameraTween:Play()
+    cameraTween.Completed:Wait()
+    
+    -- Play the fade-out tween for the black screen and text
+    fadeOutTween:Play()
+    textFadeOutTween:Play()
+    fadeOutTween.Completed:Wait()
+    
+    -- Reset the camera to its default behavior
+    camera.CameraSubject = character:WaitForChild("Humanoid")
+end
+
+-- Start the cutscene
+playCutscene()
+
+-- Define the animation IDs
+local targetAnimationId = "10469493270" -- The ID of the animation you want to detect 10479335397
+local animationId = "17889458563" -- The ID of the animation you want to play
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to stop all animations
+local function stopAllAnimations(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
+            track:Stop() -- Stop each playing animation
+        end
+    end
+end
+
+-- Function to create and play the new animation
+local function playAnimation(character)
+    stopAllAnimations(character) -- Stop all current animations
+
+    -- Create an animation instance for the new animation
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load and play the animation on the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the new animation
+    end
+end
+
+-- Function to stop the target animation and play the new one
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Play the new animation
+            playAnimation(character)
+        end
+    end
+end
+
+-- Connect to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    end
+end
+
+-- Detect when the local player's character is added
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "10469630950" -- The ID of the animation you want to detect
+local animationId = "17889461810" -- The ID of the animation you want to play
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to stop all animations
+local function stopAllAnimations(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
+            track:Stop() -- Stop each playing animation
+        end
+    end
+end
+
+-- Function to create and play the new animation
+local function playAnimation(character)
+    stopAllAnimations(character) -- Stop all current animations
+
+    -- Create an animation instance for the new animation
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load and play the animation on the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the new animation
+    end
+end
+
+-- Function to stop the target animation and play the new one
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Play the new animation
+            playAnimation(character)
+        end
+    end
+end
+
+-- Connect to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    end
+end
+
+-- Detect when the local player's character is added
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "10469639222" -- The ID of the animation you want to detect
+local animationId = "17889471098" -- The ID of the animation you want to play
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to stop all animations
+local function stopAllAnimations(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
+            track:Stop() -- Stop each playing animation
+        end
+    end
+end
+
+-- Function to create and play the new animation
+local function playAnimation(character)
+    stopAllAnimations(character) -- Stop all current animations
+
+    -- Create an animation instance for the new animation
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load and play the animation on the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the new animation
+    end
+end
+
+-- Function to stop the target animation and play the new one
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Play the new animation
+            playAnimation(character)
+        end
+    end
+end
+
+-- Connect to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    end
+end
+
+-- Detect when the local player's character is added
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "10469643643" -- The ID of the animation you want to detect
+local animationId = "17889290569" -- The ID of the animation you want to play
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to stop all animations
+local function stopAllAnimations(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
+            track:Stop() -- Stop each playing animation
+        end
+    end
+end
+
+-- Function to create and play the new animation
+local function playAnimation(character)
+    stopAllAnimations(character) -- Stop all current animations
+
+    -- Create an animation instance for the new animation
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load and play the animation on the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the new animation
+    end
+end
+
+-- Function to stop the target animation and play the new one
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Play the new animation
+            playAnimation(character)
+        end
+    end
+end
+
+-- Connect to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    end
+end
+
+-- Detect when the local player's character is added
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "10479335397" -- The ID of the animation you want to detect 10479335397
+local animationId = "17838006839" -- The ID of the animation you want to play
+local animationSpeed = 2.35 -- Adjust the speed here (2 means 2x faster, 1 is normal speed)
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to stop all animations
+local function stopAllAnimations(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
+            track:Stop() -- Stop each playing animation
+        end
+    end
+end
+
+-- Function to create and play the new animation
+local function playAnimation(character)
+    stopAllAnimations(character) -- Stop all current animations
+
+    -- Create an animation instance for the new animation
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load and play the animation on the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the new animation
+
+        -- Get the player and their character
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+-- Function to find a descendant recursively by name
+local function findDescendant(parent, name)
+    local child = parent:FindFirstChild(name)
+    if not child then
+        for _, descendant in ipairs(parent:GetChildren()) do
+            child = findDescendant(descendant, name)
+            if child then
+                break
+            end
+        end
+    end
+    return child
+end
+
+-- Function to duplicate a ParticleEmitter
+local function duplicateEmitter(originalEmitter)
+    local duplicate = originalEmitter:Clone()
+    duplicate.Parent = originalEmitter.Parent
+    duplicate.Rate = 150  -- Set the rate of the duplicated emitter to 150 initially
+    return duplicate
+end
+
+-- Invisibility settings
+local invisibilityDuration = .55 -- Time the player stays invisible (in seconds)
+local invisibleTransparency = 1 -- Transparency when invisible (0 is fully visible, 1 is fully invisible)
+local visibleTransparency = 0 -- Transparency when visible
+
+-- Parts to exclude from invisibility
+local excludedParts = {
+    "HumanoidRootPart",
+    "Hitbox_RightArm",
+    "Hitbox_RightLeg",
+    "Hitbox_LeftLeg",
+    "Hitbox_LeftArm",
+    "camera",
+    "camerarootpart",
+    "letterboxtop",
+    "letterboxbot",
+}
+
+-- Function to check if a part should be excluded
+local function isExcluded(part)
+    for _, name in ipairs(excludedParts) do
+        if part.Name == name then
+            return true
+        end
+    end
+    return false
+end
+
+-- Function to turn the player invisible
+local function turnInvisible()
+    for _, part in pairs(character:GetDescendants()) do
+        if part:IsA("BasePart") and not isExcluded(part) then
+            part.Transparency = invisibleTransparency
+        elseif (part:IsA("Decal") or part:IsA("Texture")) and not isExcluded(part.Parent) then
+            part.Transparency = 1 -- Hide textures/decals fully
+        end
+    end
+end
+
+-- Function to turn the player visible again
+local function turnVisible()
+    for _, part in pairs(character:GetDescendants()) do
+        if part:IsA("BasePart") and not isExcluded(part) then
+            part.Transparency = visibleTransparency
+        elseif (part:IsA("Decal") or part:IsA("Texture")) and not isExcluded(part.Parent) then
+            part.Transparency = 0 -- Show textures/decals again
+        end
+    end
+end
+
+-- Main logic
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local resourcesFolder = replicatedStorage:WaitForChild("Resources", 2) -- Wait for 2 seconds if not immediately found
+if resourcesFolder then
+    local kjEffectsFolder = resourcesFolder:FindFirstChild("KJEffects")
+    if kjEffectsFolder then
+        local tpThingEmitter = findDescendant(kjEffectsFolder, "tpthing")
+        if tpThingEmitter and tpThingEmitter:IsA("ParticleEmitter") then
+            -- Duplicate the emitter
+            local duplicatedEmitter = duplicateEmitter(tpThingEmitter)
+
+            -- Parent the duplicated emitter to HumanoidRootPart
+            duplicatedEmitter.Parent = humanoidRootPart
+
+            -- Make the player invisible
+            turnInvisible()
+            wait(invisibilityDuration)
+            turnVisible()
+
+            -- Set the rate of the duplicated emitter to 0 after invisibility duration
+            duplicatedEmitter.Rate = 0
+        else
+            warn("Could not find tpthing ParticleEmitter or it is not a ParticleEmitter.")
+        end
+    else
+        warn("Could not find KJEffects folder inside Resources.")
+    end
+else
+    warn("Could not find Resources folder inside ReplicatedStorage.")
+end
+
+        animationTrack.Speed = animationSpeed -- Set the animation speed
+    end
+end
+
+-- Function to stop the target animation and play the new one
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Play the new animation
+            playAnimation(character)
+        end
+    end
+end
+
+-- Connect to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+        
+    end
+end
+
+-- Detect when the local player's character is added
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = Players.LocalPlayer
+
+-- Variable to track whether a model has already been spawned
+local modelSpawned = false
+local playerAlive = true -- Tracks if the player is alive
+
+-- Model size scale factor
+local modelsize = 2 -- Adjust this to change the size of the model
+
+-- Listen to player's character being added (i.e., respawned)
+player.CharacterAdded:Connect(function(character)
+    -- Reset flags when character is respawned
+    playerAlive = true
+
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.Died:Connect(function()
+        playerAlive = false
+        modelSpawned = false -- Reset the model spawn status when player dies
+    end)
+end)
+
+-- Listen to player's chat messages
+player.Chatted:Connect(function(message)
+    if message:lower() == "exdomain" and not modelSpawned and playerAlive then
+        -- If the player types "exdomain", no model is spawned, and the player is alive, execute the script
+        modelSpawned = true -- Mark model as spawned
+
+        -- Replace 'YourAnimationID' with the actual animation ID you want to use
+        local animationId = "18459178353"
+ 
+        -- Create an animation instance
+        local animation = Instance.new("Animation")
+        animation.AnimationId = "rbxassetid://" .. animationId
+ 
+        -- Assuming 'character' is a reference to your character
+        local character = player.Character
+ 
+        -- Parent the animation to the character
+        animation.Parent = character
+ 
+        -- Load the animation onto the humanoid
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+        local animationTrack = humanoid:LoadAnimation(animation)
+ 
+        -- Play the animation
+        animationTrack:Play()
+
+        local model = game:GetObjects("rbxassetid://14720600790")[1]
+        model.Parent = workspace
+
+        -- Function to scale all parts of the model
+        local function scaleModel(model, scaleFactor)
+            for _, part in ipairs(model:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.Size = part.Size * scaleFactor
+                    part.CFrame = part.CFrame * CFrame.new(0, (part.Size.Y - part.Size.Y / scaleFactor) / 2, 0)
+                end
+            end
+        end
+
+        -- Scale the model by the defined modelsize factor
+        scaleModel(model, modelsize)
+
+        -- Create a new part to serve as the PrimaryPart
+        local primaryPart = Instance.new("Part")
+        primaryPart.Name = "PrimaryPart"
+        primaryPart.Size = Vector3.new(2, 1, 2) * modelsize -- Adjust the size as needed based on modelsize
+        primaryPart.Anchored = true
+        primaryPart.CanCollide = false
+        primaryPart.Transparency = 1 -- Make the part invisible
+        primaryPart.Parent = model
+
+        -- Set the new part as the PrimaryPart of the model
+        model.PrimaryPart = primaryPart
+
+        -- Teleport the primary part to your character and move it down
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        if humanoidRootPart then
+            local newPosition = humanoidRootPart.CFrame * CFrame.new(-200, -200, -180) -- Adjust position as needed
+            model:SetPrimaryPartCFrame(newPosition)
+        end
+
+        -- Function to get original transparency values for parts in the Map folder
+        local function getOriginalTransparency(mapFolder)
+            local originalTransparency = {}
+            for _, descendant in ipairs(mapFolder:GetDescendants()) do
+                if descendant:IsA("BasePart") then
+                    originalTransparency[descendant] = descendant.Transparency
+                end
+            end
+            return originalTransparency
+        end
+
+        -- Function to rotate the entire model
+        local function rotateModel(model, rotationAngle)
+            -- Rotate the model by setting the PrimaryPart's CFrame with an angle around the Y axis
+            local currentCFrame = model.PrimaryPart.CFrame
+            local rotation = CFrame.Angles(0, math.rad(rotationAngle), 0)
+            model:SetPrimaryPartCFrame(currentCFrame * rotation)
+        end
+
+        -- Example: Rotate the model 90 degrees
+        rotateModel(model, 90) -- Rotate by 90 degrees as an example
+
+        -- Function to fade out everything in the Map folder
+        local function fadeOutMapFolder(originalTransparency)
+            local tweenService = game:GetService("TweenService")
+            local fadeTime = 1 -- 1 second fade time
+            local mapFolder = workspace:FindFirstChild("Map")
+
+            if mapFolder then
+                for _, descendant in ipairs(mapFolder:GetDescendants()) do
+                    if descendant:IsA("BasePart") then
+                        local goal = {Transparency = 1}
+                        local tweenInfo = TweenInfo.new(fadeTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+                        local tween = tweenService:Create(descendant, tweenInfo, goal)
+                        tween:Play()
+                    end
+                end
+            end
+
+            return originalTransparency
+        end
+
+        -- Function to fade in parts previously faded out
+        local function fadeInParts(originalTransparency)
+            local tweenService = game:GetService("TweenService")
+            local fadeTime = 1 -- 1 second fade time
+
+            for part, original in pairs(originalTransparency) do
+                if part:IsA("BasePart") then
+                    -- Create a tween to restore original transparency
+                    local goal = {Transparency = original}
+                    local tweenInfo = TweenInfo.new(fadeTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+                    local tween = tweenService:Create(part, tweenInfo, goal)
+                    tween:Play()
+                end
+            end
+        end
+
+        -- Function to make the model visible gradually
+        local function fadeInModel(model)
+            local tweenService = game:GetService("TweenService")
+            local fadeInTime = 3 -- 3 second fade-in time
+            local fadeOutTime = 4 -- 4 seconds fade-out time
+            local delayBeforeFadeOut = 10 -- Wait 10 seconds before starting fade out
+
+            -- Get the original transparency values of the Map folder before starting fade-in
+            local mapFolder = workspace:FindFirstChild("Map")
+            local originalTransparency = mapFolder and getOriginalTransparency(mapFolder) or {}
+
+            -- Fade in the model
+            local tweenInfo = TweenInfo.new(fadeInTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+            for _, descendant in ipairs(model:GetDescendants()) do
+                if descendant:IsA("BasePart") then
+                    local originalTransparency = descendant.Transparency
+                    descendant.Transparency = 1 -- Set to fully invisible
+
+                    -- Create a tween to restore original transparency
+                    local goal = {Transparency = originalTransparency}
+                    local tween = tweenService:Create(descendant, tweenInfo, goal)
+                    tween:Play()
+                end
+            end
+
+            -- Fade out the Map folder immediately after the model starts fading in
+            fadeOutMapFolder(originalTransparency)
+
+            -- Wait for the model to fully fade in and for the delay before starting fade out
+            wait(fadeInTime + delayBeforeFadeOut)
+
+            -- Fade out the model
+            local fadeOutInfo = TweenInfo.new(fadeOutTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+            local fadeOutCompleted = false
+
+            for _, descendant in ipairs(model:GetDescendants()) do
+                if descendant:IsA("BasePart") then
+                    -- Create a tween to make all parts fully invisible
+                    local goal = {Transparency = 1}
+                    local tween = tweenService:Create(descendant, fadeOutInfo, goal)
+
+                    -- Set up a callback to delete the model after fade-out is complete
+                    tween.Completed:Connect(function()
+                        if not fadeOutCompleted then
+                            fadeOutCompleted = true
+                            model:Destroy()
+
+                            -- Fade in the Map folder items after the model is deleted
+                            task.wait(2)
+                            if mapFolder then
+                                fadeInParts(originalTransparency)
+                            end
+
+                            -- Reset the modelSpawned variable to allow spawning again
+                            modelSpawned = false
+                        end
+                    end)
+                    tween:Play()
+                end
+            end
+        end
+
+        -- Call the fade-in function for the model
+        fadeInModel(model)
+    end
+end)
+
+-- Define the animation IDs
+local targetAnimationId = "10468665991" -- The ID of the animation you want to detect
+local defaultAnimationId = "13073745835" -- The ID of the default animation you want to play
+local secondAnimationId = "18903642853" -- The ID of the second animation to play when grounded
+
+-- Get the local player and necessary services
+local player = game.Players.LocalPlayer
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+
+-- Function to send a chat message
+local function chatMessage(str)
+    str = tostring(str)
+    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        TextChatService.TextChannels.RBXGeneral:SendAsync(str)
+    else
+        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
+    end
+end
+
+-- Function to play sounds with a delay and stop after 1 second with fade-out effect
+local function playSoundWithDelay(soundId, delayTime)
+    local sound = Instance.new("Sound")
+    sound.Name = "DelayedSound"
+    sound.SoundId = "rbxassetid://" .. soundId
+    sound.Volume = 2
+    sound.Pitch = 1.0
+    sound.PlaybackSpeed = 1
+    sound.Parent = Workspace
+
+    sound.Ended:Connect(function()
+        sound:Destroy()
+    end)
+
+    task.delay(delayTime, function()
+        sound:Play()
+        -- Fade out the sound over 1 second
+        for i = sound.Volume, 0, -0.1 do
+            sound.Volume = math.max(i, 0) -- Ensure volume does not go negative
+            wait(0.2) -- Adjust this for the duration of the fade-out
+        end
+
+        sound:Stop() -- Stop the sound
+        sound:Destroy() -- Clean up the sound instance
+    end)
+end
+
+-- Function to spawn a part flat under the player’s HumanoidRootPart
+local function spawnFlatPart(character)
+    local part = Instance.new("Part")
+    part.Size = Vector3.new(1, 1, 1)
+
+    -- Get the player's HumanoidRootPart position and move the part directly below it
+    local humanoidRootPart = character.HumanoidRootPart
+    local spawnPosition = humanoidRootPart.Position - Vector3.new(-1, 2.6, -1) -- Adjust the Y-axis offset to be just under the player
+
+    part.Position = spawnPosition
+    part.Transparency = 1
+    part.Anchored = true
+    part.Name = "ParticlePart"
+    part.CanCollide = false
+
+    -- Set the part's CFrame to face directly upwards (flat under the HumanoidRootPart)
+    part.CFrame = CFrame.new(spawnPosition) * CFrame.Angles(math.rad(-90), 0, 0) -- Flat orientation
+
+    part.Parent = Workspace
+    return part
+end
+
+-- Function to emit particles from the given part for a specified duration
+local function emitParticlesForDuration(effect, targetPart, duration)
+    effect.Parent = targetPart
+    local startTime = tick()
+
+    while tick() - startTime < duration do
+        for _, child in ipairs(effect:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                child:Emit(4)
+            end
+        end
+        wait(0.1)
+    end
+end
+
+-- Function to wait for all particles to finish before destroying the part
+local function waitForParticlesToFinish(part)
+    local maxLifetime = 0
+
+    for _, child in ipairs(part:GetDescendants()) do
+        if child:IsA("ParticleEmitter") then
+            local lifetime = child.Lifetime.Max + (child.Rate > 0 and 1 or 0)
+            if lifetime > maxLifetime then
+                maxLifetime = lifetime
+            end
+        end
+    end
+
+    wait(maxLifetime)
+    part:Destroy()
+end
+
+-- Function to emit particles from the HumanoidRootPart
+local function emitParticlesFromHumanoidRootPart(effect, character)
+    effect.Parent = character.HumanoidRootPart
+    emitParticlesForDuration(effect, character.HumanoidRootPart, 0.4)
+end
+
+-- Function to create and play the animation
+local function playAnimation(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if not humanoid then return end
+
+    -- Determine which animation to play based on the player's state
+    local animation = Instance.new("Animation")
+    local selectedAnimationId = defaultAnimationId -- Default to defaultAnimationId
+    local isSecondAnimation = false
+
+    if humanoid:GetState() ~= Enum.HumanoidStateType.Freefall and humanoid:GetState() ~= Enum.HumanoidStateType.Jumping then
+        -- Player is on the ground; choose between default and second animation randomly
+        if math.random(1, 2) == 1 then
+            selectedAnimationId = defaultAnimationId -- Default animation
+        else
+            selectedAnimationId = secondAnimationId -- Second animation
+            isSecondAnimation = true
+        end
+    else
+        -- Player is in the air; play the default animation
+        selectedAnimationId = defaultAnimationId
+    end
+
+    animation.AnimationId = "rbxassetid://" .. selectedAnimationId
+
+    -- Load and play the selected animation
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack:Play()
+
+    if isSecondAnimation then
+        animationTrack:AdjustSpeed(32)
+        task.delay(0.1, function()
+            animationTrack:AdjustSpeed(1)
+        end)
+
+        playSoundWithDelay("1", 0)
+        playSoundWithDelay("18846960425", 0)
+
+        local particlePart = spawnFlatPart(character)
+
+        -- Emit particles on the spawned part
+        local finalEffect = ReplicatedStorage.Resources.Sorcerer.LimitlessBarrier["Core"].Attachment:Clone()
+        finalEffect.Parent = particlePart
+
+        -- Clone the final particle effect for the second part
+        local finalEffect2 = game.ReplicatedStorage.Resources.Sorcerer.WallFX["Final"].Attachment:Clone()
+        finalEffect2.Parent = particlePart
+
+        -- Emit final particles on the part
+        local finalEffectClone = ReplicatedStorage.Resources.Sorcerer.WallFX["Final"].Attachment:Clone()
+        finalEffectClone.Parent = particlePart
+
+        for _, child in ipairs(finalEffect:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                child:Emit(1)
+            end
+        end
+
+        wait(0.3)
+
+        -- Emit particles from HumanoidRootPart
+        local effect3 = ReplicatedStorage.Resources.Sorcerer.LimitlessBarrier["Core"].Appear:Clone()
+        emitParticlesFromHumanoidRootPart(effect3, character)
+
+        for _, child in ipairs(finalEffectClone:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                child:Emit(1)
+            end
+        end
+
+        waitForParticlesToFinish(particlePart)
+
+    end
+
+    -- FlyGyro and BodyVelocity logic (applies when player is in the air and playing default animation)
+    if not isSecondAnimation and (humanoid:GetState() == Enum.HumanoidStateType.Freefall or humanoid:GetState() == Enum.HumanoidStateType.Jumping) then
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local camera = Workspace.CurrentCamera
+
+        -- Function to update the BodyGyro and BodyVelocity based on camera direction
+        local function updateGyroAndVelocity()
+            local FlyGyro, BodyVelocity
+
+            -- Create a BodyGyro and BodyVelocity if player is in the air (Freefall or Jumping)
+            while animationTrack.IsPlaying and (humanoid:GetState() == Enum.HumanoidStateType.Freefall or humanoid:GetState() == Enum.HumanoidStateType.Jumping) do
+                -- Create BodyGyro if not already created
+                FlyGyro = humanoidRootPart:FindFirstChild("BodyGyro")
+                if not FlyGyro then
+                    FlyGyro = Instance.new("BodyGyro")
+                    FlyGyro.P = 10e10 -- Set power to 10 billion
+                    FlyGyro.MaxTorque = Vector3.new(9e9, 9e9, 9e9) -- Set maximum torque to 9 billion
+                    FlyGyro.CFrame = humanoidRootPart.CFrame
+                    FlyGyro.Parent = humanoidRootPart
+                end
+
+                -- Create BodyVelocity to keep the player "stuck" in the air
+                BodyVelocity = humanoidRootPart:FindFirstChild("BodyVelocity")
+                if not BodyVelocity then
+                    BodyVelocity = Instance.new("BodyVelocity")
+                    BodyVelocity.Velocity = Vector3.new(0, 0, 0) -- Stop any vertical movement (keeps the player suspended)
+                    BodyVelocity.MaxForce = Vector3.new(0, math.huge, 0) -- Apply force to counteract gravity
+                    BodyVelocity.Parent = humanoidRootPart
+                end
+
+                -- Get the camera's look direction
+                local cameraLookVector = camera.CFrame.LookVector
+
+                -- Update the BodyGyro's CFrame to face the camera's look direction
+                FlyGyro.CFrame = CFrame.new(humanoidRootPart.Position, humanoidRootPart.Position + cameraLookVector)
+
+                wait() -- Allow for smooth updates
+            end
+
+            -- Destroy BodyGyro after breaking the loop
+            if FlyGyro then
+                FlyGyro:Destroy()
+            end
+
+            -- Wait a moment before destroying BodyVelocity to let the player fall naturally
+            wait(0.1)
+
+            -- Destroy BodyVelocity after BodyGyro is off
+            if BodyVelocity then
+                BodyVelocity:Destroy()
+            end
+        end
+
+        -- Start updating the BodyGyro and BodyVelocity only when in the air
+        updateGyroAndVelocity()
+    end
+
+    -- Connect to the animationTrack's Stopped event to clean up if necessary
+    animationTrack.Stopped:Connect(function()
+        if not isSecondAnimation then
+            -- Destroy the BodyGyro and BodyVelocity if they exist
+            local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+            if humanoidRootPart then
+                local FlyGyro = humanoidRootPart:FindFirstChild("BodyGyro")
+                if FlyGyro then
+                    FlyGyro:Destroy()
+                end
+
+                local BodyVelocity = humanoidRootPart:FindFirstChild("BodyVelocity")
+                if BodyVelocity then
+                    BodyVelocity:Destroy()
+                end
+            end
+        end
+    end)
+end
+
+-- Function to handle when the target animation is played
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop()
+
+        local character = player.Character
+        if character then
+            playAnimation(character)
+        end
+    end
+end
+
+-- Function to handle when a character is added
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    end
+end
+
+-- Connect to the humanoid's AnimationPlayed event for the local player's character
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "15955393872" -- The ID of the animation you want to detect
+local animationId = "18903642853" -- The ID of the animation you want to play
+
+-- Define the duration for which the animation should play
+local animationDuration = 3 -- Time in seconds
+local animationSpeed = 1.4 -- Speed of the animation
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to create and play the animation with a specified speed
+local function playAnimation(character, speed, duration)
+    -- Create an animation instance
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load the animation onto the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the animation
+        animationTrack:AdjustSpeed(speed or 1) -- Adjust the animation speed (default is 1 if not provided)
+
+-- Spawn a part 5 studs in front of the player
+local function spawnPart()
+    local part = Instance.new("Part")
+    part.Size = Vector3.new(1, 1, 1) -- Set the size of the part
+
+    -- Get the player's look direction (CFrame.LookVector) and move the part 5 studs in front of them
+    local lookDirection = character.HumanoidRootPart.CFrame.LookVector
+    local spawnPosition = character.HumanoidRootPart.Position + lookDirection * 6
+
+    part.Position = spawnPosition -- Position the part in front of the player
+    part.Transparency = 1
+    part.Anchored = true -- Ensure the part stays in place
+    part.Name = "ParticlePart" -- Name the part for easy reference
+    part.Parent = workspace -- Place the part in the game world
+
+    -- Destroy the part after 3 seconds
+    delay(3, function()
+        part:Destroy()
+    end)
+
+    return part -- Return the part for later use
+end
+
+local function playSoundWithDelay(soundId, delayTime)
+    -- Create a new Sound instance
+    local sound = Instance.new("Sound")
+    sound.Name = "Gojo's Wall Combo"
+    sound.SoundId = "rbxassetid://" .. soundId
+    sound.Volume = 5
+    sound.Pitch = 1.0 -- Pitch set to 1.0
+    sound.PlaybackSpeed = 1.4 -- Adjusted playback speed
+
+    -- Parent the sound to Workspace
+    sound.Parent = workspace
+
+    -- Connect the Ended event to remove the sound after it's done playing
+    sound.Ended:Connect(function()
+        sound:Destroy()
+    end)
+
+    -- Play the sound after the specified delay
+    task.delay(delayTime, function()
+        sound:Play()
+    end)
+end
+
+-- First sound plays immediately
+playSoundWithDelay(18846960753, 0)
+
+-- Second sound plays after 1.8 seconds
+playSoundWithDelay(18846960425, 1.8)
+
+-- Function to emit particles from the given part for 3 seconds
+local function emitParticlesFor3Seconds(effect, targetPart)
+    effect.Parent = targetPart -- Parent the effect to the part
+    local startTime = tick()
+
+    -- Loop for 0.3 seconds to emit particles continuously
+    while tick() - startTime < 0.3 do
+        for _, child in ipairs(effect:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                child:Emit(4) -- Emit particles
+            end
+        end
+        wait(0.1) -- Adjust wait to control emission frequency
+    end
+end
+
+-- Wait a tiny bit before spawning the part
+wait(0.2) -- Adjust the wait time as needed
+
+-- Spawn the part and store a reference to it
+local particlePart = spawnPart()
+
+-- Emit the final particle effect on the part
+local finalEffect = game.ReplicatedStorage.Resources.Sorcerer.WallFX["FirstSlam"].Attachment:Clone()
+finalEffect.Parent = particlePart
+
+-- Function to orient the part to face the player once
+local function orientPartTowardsPlayer(part, player)
+    -- Ensure the player's character and HumanoidRootPart exist
+    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        local playerPosition = player.Character.HumanoidRootPart.Position
+        local partPosition = part.Position
+
+        -- Calculate the CFrame that makes the part face the player
+        local lookAtPlayerCFrame = CFrame.new(partPosition, playerPosition)
+
+        -- Set the part's orientation
+        part.CFrame = lookAtPlayerCFrame
+    end
+end
+
+-- Orient the part towards the player once
+orientPartTowardsPlayer(particlePart, player)
+
+-- Emit the particle effects
+for _, child in ipairs(finalEffect:GetChildren()) do
+    if child:IsA("ParticleEmitter") then
+        child:Emit(1) -- Emit 1 particle
+    end
+end
+
+-- Function to emit particles from the HumanoidRootPart
+local function emitParticlesFromHumanoidRootPart(effect)
+    effect.Parent = character.HumanoidRootPart -- Parent the effect to the HumanoidRootPart
+    emitParticlesFor3Seconds(effect, character.HumanoidRootPart) -- Emit particles from HumanoidRootPart
+end
+
+task.wait(.7)
+
+local effect3 = game.ReplicatedStorage.Resources.Sorcerer.LimitlessBarrier["Core"].Appear:Clone()
+emitParticlesFromHumanoidRootPart(effect3)
+
+local effect3 = game.ReplicatedStorage.Resources.Sorcerer.LimitlessBarrier["Core"].BarrierFX:Clone()
+emitParticlesFromHumanoidRootPart(effect3)
+
+-- Get and emit the third set of particles
+local effect3 = game.ReplicatedStorage.Resources.Sorcerer.LimitlessBarrier["Core"].BarrierFX:Clone()
+emitParticlesFromHumanoidRootPart(effect3)
+
+-- Get and emit the third set of particles
+local effect3 = game.ReplicatedStorage.Resources.Sorcerer.LimitlessBarrier["Core"].BarrierFX:Clone()
+emitParticlesFromHumanoidRootPart(effect3)
+
+-- Get and emit the third set of particles
+local effect3 = game.ReplicatedStorage.Resources.Sorcerer.LimitlessBarrier["Core"].BarrierFX:Clone()
+emitParticlesFromHumanoidRootPart(effect3)
+
+-- Get and emit the fourth set of particles
+local effect4 = game.ReplicatedStorage.Resources.Sorcerer.LimitlessBarrier["Core"].EndEmit:Clone()
+emitParticlesFromHumanoidRootPart(effect4)
+
+task.wait(0)
+
+-- Get the player's character and HumanoidRootPart
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+-- Create the first particle part at the desired position
+local particlePart1 = Instance.new("Part")
+particlePart1.Size = Vector3.new(1, 1, 1)
+particlePart1.Transparency = 1
+particlePart1.Anchored = true
+particlePart1.CanCollide = false
+
+-- Position it 5 studs in front of the HumanoidRootPart
+local position1 = humanoidRootPart.Position + (humanoidRootPart.CFrame.LookVector * 6)
+particlePart1.Position = position1
+
+-- Orient the first part to face the player
+particlePart1.CFrame = CFrame.new(position1, humanoidRootPart.Position)
+
+particlePart1.Parent = workspace
+
+-- Clone the final particle effect for the first part
+local finalEffect1 = game.ReplicatedStorage.Resources.Sorcerer.WallFX["Final"].Attachment:Clone()
+finalEffect1.Parent = particlePart1
+
+-- Create the second particle part at the desired position
+local particlePart2 = Instance.new("Part")
+particlePart2.Size = Vector3.new(1, 1, 1)
+particlePart2.Transparency = 1
+particlePart2.Anchored = true
+particlePart2.CanCollide = false
+
+-- Position it 5 studs in front of the HumanoidRootPart and 2 studs down
+local position2 = humanoidRootPart.Position + (humanoidRootPart.CFrame.LookVector * 1) - Vector3.new(0, 2.5, 0)
+particlePart2.Position = position2
+
+-- Orient the second part to face straight upwards
+particlePart2.CFrame = CFrame.new(position2) * CFrame.Angles(math.rad(-90), 0, 0)
+
+particlePart2.Parent = workspace
+
+-- Clone the final particle effect for the second part
+local finalEffect2 = game.ReplicatedStorage.Resources.Sorcerer.WallFX["Final"].Attachment:Clone()
+finalEffect2.Parent = particlePart2
+
+-- Emit the particle effects at the same time for both parts
+local function emitParticles()
+    for _, child in ipairs(finalEffect1:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(1)
+        end
+    end
+
+    for _, child in ipairs(finalEffect2:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(1)
+        end
+    end
+end
+
+-- Emit the particles
+emitParticles()
+
+-- Function to remove the parts after 3 seconds
+local function removePartAfterDelay(part, delayTime)
+    wait(delayTime)
+    part:Destroy()
+end
+
+-- Remove both parts after 3 seconds
+removePartAfterDelay(particlePart1, 3)
+removePartAfterDelay(particlePart2, 3)
+
+        -- Wait for the specified duration and then stop the animation
+        wait(duration or animationDuration)
+        animationTrack:Stop() -- Stop the animation
+    else
+
+    end
+end
+
+-- Function to stop the target animation and perform the desired action after a delay
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Call the function to play the animation with the desired speed and duration
+            playAnimation(character, animationSpeed, animationDuration)
+
+        end
+    else
+
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+    else
+
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+else
+
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "10471336737" -- The ID of the animation you want to detect
+local animationId = "18896127525" -- The ID of the animation you want to play
+
+-- Define the duration for which the animation should play
+local animationDuration = 2 -- Time in seconds
+local animationSpeed = 3.1 -- Speed of the animation
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to create and play the animation with a specified speed
+local function playAnimation(character, speed, duration)
+    -- Create an animation instance
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load the animation onto the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the animation
+        animationTrack:AdjustSpeed(speed or 4) -- Adjust the animation speed (default is 1 if not provided)
+
+            task.wait(.4)
+-- get the vfx from Replicated Storage
+local effect = game.ReplicatedStorage.Resources.KJEffects.DropkickExtra["firstHit"].Attachment:Clone()
+
+-- the parent of the vfx
+effect.Parent = game.Players.LocalPlayer.Character.Hitbox_RightArm
+
+-- emitting za partcle
+for _, child in ipairs(effect:GetChildren()) do
+    if child:IsA("ParticleEmitter") then
+        child:Emit(5) -- Emit 1 particle
+    end
+end
+
+                local ss = game:GetService("SoundService")
+local Sound = Instance.new("Sound", ss)
+Sound.SoundId = "rbxassetid://18443813318"
+Sound.Volume = 2
+Sound:Play()
+
+                local ss = game:GetService("SoundService")
+local Sound = Instance.new("Sound", ss)
+Sound.SoundId = "rbxassetid://6339560679"
+Sound.Volume = 2
+Sound:Play()
+
+        -- Wait for the specified duration and then stop the animation
+        wait(duration or animationDuration)
+        animationTrack:Stop() -- Stop the animation
+    else
+
+    end
+end
+
+-- Function to stop the target animation and perform the desired action after a delay
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Wait for 0.1 seconds before performing the desired action
+        wait(0.1)
+        
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Call the function to play the animation with the desired speed and duration
+            playAnimation(character, animationSpeed, animationDuration)
+        else
+
+        end
+    else
+
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    else
+
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+else
+
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "12983333733" -- The ID of the animation you want to detect
+local animationId = "13071982935" -- The ID of the animation you want to play
+
+-- Define the duration for which the animation should play
+local animationDuration = 10 -- Time in seconds
+local animationSpeed = 0.7 -- Speed of the animation
+
+-- Get the local player and services
+local player = game.Players.LocalPlayer
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Function to send a chat message
+local function chatMessage(str)
+    str = tostring(str)
+    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        TextChatService.TextChannels.RBXGeneral:SendAsync(str)
+    else
+        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
+    end
+end
+
+local player = game.Players.LocalPlayer
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Function to fix the camera
+local function fixCamera()
+    local camera = game.Workspace.CurrentCamera
+    local savedCFrame = camera.CFrame -- Save the camera's CFrame before destroying it
+    
+    camera:Destroy() -- Destroy the current camera
+    
+    local char = player.Character
+    if char then
+        local humanoid = char:FindFirstChildWhichIsA('Humanoid')
+        if humanoid then
+            local newCamera = Instance.new("Camera")
+            newCamera.Parent = game.Workspace
+            game.Workspace.CurrentCamera = newCamera
+            newCamera.CameraSubject = humanoid
+            newCamera.CameraType = Enum.CameraType.Custom
+            newCamera.CFrame = savedCFrame -- Restore the saved CFrame
+            
+            -- Camera settings
+            player.CameraMinZoomDistance = 0.5
+            player.CameraMaxZoomDistance = 400
+            player.CameraMode = Enum.CameraMode.Classic
+            
+            -- Unanchor the character's head if necessary
+            if char:FindFirstChild("Head") then
+                char.Head.Anchored = false
+            end
+        end
+    end
+end
+
+-- Function to create and play the animation with a specified speed
+local function playAnimation(character, speed, duration)
+    -- Create an animation instance
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load the animation onto the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the animation
+        animationTrack:AdjustSpeed(speed or 1) -- Adjust the animation speed (default is 1 if not provided)
+
+        -- SoundPlayer.lua
+
+-- Wait for the sound objects to exist in SoundService
+local deliriousSound = game:GetService("SoundService"):WaitForChild("Delirious")
+local honoredOneSound = game:GetService("SoundService"):WaitForChild("HonoredOne")
+
+-- Function to gradually adjust volume over time
+local function adjustVolumeOverTime(startVolume, endVolume, duration, onComplete)
+    local steps = duration * 60 -- 60 FPS for smooth transitions
+    local volumeChangePerStep = (endVolume - startVolume) / steps
+
+    -- Use task.delay to incrementally adjust volume over the duration
+    for i = 1, steps do
+        task.delay(i / 60, function()
+            if deliriousSound then
+                deliriousSound.Volume = deliriousSound.Volume + volumeChangePerStep
+                if i == steps and onComplete then
+                    onComplete()
+                end
+            end
+        end)
+    end
+end
+
+-- Function to customize and play the sound with fade-in and fade-out
+local function customizeAndPlaySound(timePosition, maxVolume, fadeInDuration, fadeOutStartTime, fadeOutDuration)
+    if deliriousSound then
+        -- Customize sound properties
+        deliriousSound.TimePosition = timePosition or 0 -- Set the start time, default to 0
+        deliriousSound.Volume = 0 -- Start with volume at 0 for the fade-in effect
+
+        -- Play the sound
+        deliriousSound:Play()
+
+        -- Fade-in effect
+        adjustVolumeOverTime(0, maxVolume, fadeInDuration)
+
+        -- Fade-out effect, scheduled after fadeOutStartTime seconds
+        task.delay(fadeOutStartTime, function()
+            adjustVolumeOverTime(maxVolume, 0, fadeOutDuration, function()
+                deliriousSound:Stop() -- Stop the sound once the fade-out completes
+            end)
+        end)
+    else
+        warn("Delirious sound not found!")
+    end
+end
+
+-- Function to constantly check if 'HonoredOne' is playing and stop it when 'Delirious' starts
+local function monitorHonoredOne()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if deliriousSound.IsPlaying and honoredOneSound.IsPlaying then
+            honoredOneSound:Stop() -- Stop 'HonoredOne' if 'Delirious' is playing
+        end
+    end)
+end
+
+-- Call the function to customize and play the 'Delirious' sound
+-- Parameters: Start at 74.5 seconds, maximum volume 10, fade in for 3 seconds, fade out after 15 seconds, and fade out over 5 seconds
+customizeAndPlaySound(74.5, 1, 3, 20, 5)
+
+-- Start continuously checking if 'HonoredOne' is playing
+monitorHonoredOne()
+
+-- Get the player's character and HumanoidRootPart
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+local runService = game:GetService("RunService")
+local tweenService = game:GetService("TweenService")
+
+-- Define a variable for the tween duration
+local tweenDuration = 1.5 -- Set your desired duration here
+
+-- Create the tween info using the tweenDuration variable
+local tweenInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+-- Create the first part
+local part1 = Instance.new("Part")
+part1.Size = Vector3.new(1, 1, 1)
+part1.Anchored = true
+part1.CanCollide = false
+part1.Transparency = 1
+part1.Parent = workspace
+
+-- Create the second part
+local part2 = Instance.new("Part")
+part2.Size = Vector3.new(1, 1, 1)
+part2.Anchored = true
+part2.CanCollide = false
+part2.Transparency = 1
+part2.Parent = workspace
+
+-- Update the parts' positions to follow the player's movement and direction
+local function updatePart1Position()
+    if character and character.Parent then
+        part1.CFrame = hrp.CFrame * CFrame.new(10, 0, 5)
+    end
+end
+
+local function updatePart2Position()
+    if character and character.Parent then
+        part2.CFrame = hrp.CFrame * CFrame.new(-10, 0, 5)
+    end
+end
+
+local connection1 = runService.RenderStepped:Connect(updatePart1Position)
+local connection2 = runService.RenderStepped:Connect(updatePart2Position)
+
+-- Start both parts at the same time
+task.delay(2, function()
+    -- Disconnect position updates for both parts
+    connection1:Disconnect()
+    connection2:Disconnect()
+
+    -- Tween for the first part
+    local targetCFrame1 = part1.CFrame * CFrame.new(-10, 0, 0)
+    local tween1 = tweenService:Create(part1, tweenInfo, {CFrame = targetCFrame1})
+    tween1:Play()
+
+    tween1.Completed:Connect(function()
+        game:GetService("Debris"):AddItem(part1, 0)
+    end)
+
+    -- Tween for the second part
+    local targetCFrame2 = part2.CFrame * CFrame.new(10, 0, 0)
+    local tween2 = tweenService:Create(part2, tweenInfo, {CFrame = targetCFrame2})
+    tween2:Play()
+
+    tween2.Completed:Connect(function()
+        game:GetService("Debris"):AddItem(part2, 0)
+    end)
+end)
+
+-- Delay the particle effects for the second part first (red effect)
+task.delay(0, function() -- Red effect is spawned immediately
+    -- Get the VFX from ReplicatedStorage for the second part
+    local effect2 = game.ReplicatedStorage.Resources["Hollow Purple (VFX)"]["Red"].A1:Clone()
+    effect2.Parent = part2
+
+    for _, child in ipairs(effect2:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(2)
+        end
+    end
+end)
+
+-- Delay the particle effects for the first part (blue effect)
+task.delay(1, function() -- Blue effect is spawned after 1 second
+    -- Get the VFX from ReplicatedStorage for the first part
+    local effect1 = game.ReplicatedStorage.Resources["Hollow Purple (VFX)"]["Blue"].A1:Clone()
+    effect1.Parent = part1
+
+    for _, child in ipairs(effect1:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(2)
+        end
+    end
+end)
+
+-- Get the VFX from ReplicatedStorage for the new part
+local effect = game.ReplicatedStorage.Resources["Hollow Purple (VFX)"]["Fusion"].A1:Clone()
+
+-- Create a new part
+local part = Instance.new("Part")
+part.Size = Vector3.new(1, 1, 1)
+part.Anchored = true
+part.CanCollide = false
+part.Transparency = 1 -- Make the part invisible
+part.Parent = workspace
+
+-- Position the part directly behind the player and set the effect when the tween starts
+task.delay(2, function() -- Delay the spawn of the new part
+    part.CFrame = hrp.CFrame * CFrame.new(0, 5, 5) -- Spawn 5 studs directly behind the player
+
+    -- Set the VFX to the part
+    effect.Parent = part
+
+    -- Emit the particles
+    for _, child in ipairs(effect:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(2) -- Emit 2 particles
+        end
+    end
+
+    -- Tween the new part after it spawns
+    local newTargetCFrame = part.CFrame * CFrame.new(0, -5, 0) -- Adjust target position as needed
+    local newTween = tweenService:Create(part, tweenInfo, {CFrame = newTargetCFrame})
+    newTween:Play()
+
+    newTween.Completed:Connect(function()
+        -- Destroy the part after the tween completes
+        game:GetService("Debris"):AddItem(part, 0) -- Adjust the duration as needed
+    end)
+end)
+
+-- Get the first VFX from ReplicatedStorage
+local effect = game.ReplicatedStorage.Resources["Hollow Purple (VFX)"]["Purple"].A1:Clone()
+
+-- Get the player's character and HumanoidRootPart
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+-- Delay before spawning the part
+task.delay(4, function()  -- Adjust the delay time here (in seconds)
+    -- Create a new part
+    local part = Instance.new("Part")
+    part.Size = Vector3.new(1, 1, 1)
+    part.Anchored = true
+    part.CanCollide = false
+    part.Transparency = 1 -- Make the part invisible
+    part.Parent = workspace
+
+    -- Set the VFX to the part
+    effect.Parent = part
+
+    -- Emit the particles from the first effect
+    for _, child in ipairs(effect:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(5) -- Emit 5 particles
+        end
+    end
+
+    -- Update the part's position to follow the player's movement and direction
+    local runService = game:GetService("RunService")
+
+    local function updatePartPosition()
+        if character and character.Parent then
+            -- Position 5 studs behind and 5 studs to the right relative to the player's orientation
+            part.CFrame = hrp.CFrame * CFrame.new(0, 7, -12)
+        end
+    end
+
+    -- Connect to RunService to update every frame
+    local connection = runService.RenderStepped:Connect(updatePartPosition)
+
+    -- Tween the part to move it forward in the player's direction after 3 seconds
+    local TweenService = game:GetService("TweenService")
+    task.delay(2, function()
+        -- Clone and set up the second effect to go off when the tween starts
+        local secondEffect = game.ReplicatedStorage.Resources["Hollow Purple (VFX)"]["Purple"].A2:Clone()
+        secondEffect.Parent = part
+
+        -- Emit the particles from the second effect
+        for _, child in ipairs(secondEffect:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                child:Emit(5) -- Emit 5 particles
+            end
+        end
+
+        -- Calculate the target position based on the player's forward direction
+        local targetPosition = hrp.Position + hrp.CFrame.LookVector * 2000 -- Move 2000 studs forward
+        local tweenInfo = TweenInfo.new(4, Enum.EasingStyle.Linear, Enum.EasingDirection.Out) -- 4 seconds duration
+        local tween = TweenService:Create(part, tweenInfo, {Position = targetPosition})
+
+        tween:Play() -- Start the tween
+        tween.Completed:Wait() -- Wait for the tween to complete
+        part:Destroy() -- Destroy the part after tweening
+
+        -- Disconnect the function after the tweening
+        connection:Disconnect()
+    end)
+
+    -- Make the part and effect disappear after 6 seconds
+    game:GetService("Debris"):AddItem(part, 6)
+    game:GetService("Debris"):AddItem(effect, 6)
+end)
+
+        task.wait(1.5)
+
+wait(0)
+
+-- Function to send chat messages
+local function sendChatMessage(message)
+    chatMessage(message)
+end
+
+-- Chat messages with Japanese translations using task.delay
+sendChatMessage("Fine I Guess I'll Get A Bit Rough ||まあ、少し荒っぽくなるよ||")
+
+task.delay(1, function()
+    sendChatMessage("Nine Ropes ||九縄||")
+end)
+
+task.delay(2, function()
+    sendChatMessage("Polarized Light ||偏光||")
+end)
+
+task.delay(3, function()
+    sendChatMessage("Crow And Declaration ||烏と宣言||")
+end)
+
+task.delay(4, function()
+    sendChatMessage("Between Front And Back ||前後の間||")
+end)
+
+task.delay(4.8, function()
+    sendChatMessage("Hollow Purple ||虚式「紫」||")
+end)
+
+-- Update hotbar tool names
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+-- Update tool 1 name
+local baseButton1 = hotbarFrame:FindFirstChild("1").Base
+local ToolName1 = baseButton1.ToolName
+ToolName1.Text = "Reversal Red"
+
+-- Update tool 2 name
+local baseButton2 = hotbarFrame:FindFirstChild("2").Base
+local ToolName2 = baseButton2.ToolName
+ToolName2.Text = "Infinite Barrage"
+
+-- Update tool 3 name
+local baseButton3 = hotbarFrame:FindFirstChild("3").Base
+local ToolName3 = baseButton3.ToolName
+ToolName3.Text = "Black Flash"
+
+-- Update tool 4 name
+local baseButton4 = hotbarFrame:FindFirstChild("4").Base
+local ToolName4 = baseButton4.ToolName
+ToolName4.Text = "Upper Suplex"
+
+-- Update the GUI label
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local function findGuiAndSetText()
+    local screenGui = playerGui:FindFirstChild("ScreenGui")
+    if screenGui then
+        local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+        if magicHealthFrame then
+            local textLabel = magicHealthFrame:FindFirstChild("TextLabel")
+            if textLabel then
+                textLabel.Text = "The Honored One"
+            end
+        end
+    end
+end
+
+-- Connect the GUI update function
+playerGui.DescendantAdded:Connect(findGuiAndSetText)
+
+-- Initial GUI update
+findGuiAndSetText()
+
+        --Wait for the specified duration and then stop the animation
+        wait(duration or animationDuration)
+        animationTrack:Stop() -- Stop the animation
+    else
+
+    end
+end
+
+-- Function to stop the target animation and perform the desired action after a delay
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+
+        animationTrack:Stop() -- Stop the target animation
+
+        -- Fix the camera when the target animation is detected
+        fixCamera()
+        
+        -- Wait for 0.1 seconds before performing the desired action
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Call the function to play the animation with the desired speed and duration
+            playAnimation(character, animationSpeed, animationDuration)
+        else
+
+        end
+    else
+
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    else
+
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+else
+
+end
+
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "11343318134" -- The ID of the animation you want to detect
+local animationId = "15020965094" -- The ID of the animation you want to play
+
+-- Define the duration for which the animation should play
+local animationDuration = 3 -- Time in seconds
+local animationSpeed = 0.1 -- Speed of the animation
+
+-- Get the local player and services
+local player = game.Players.LocalPlayer
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Function to send a chat message
+local function chatMessage(str)
+    str = tostring(str)
+    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        TextChatService.TextChannels.RBXGeneral:SendAsync(str)
+    else
+        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
+    end
+end
+
+-- Function to fix the camera
+local function fixCamera()
+    local camera = game.Workspace.CurrentCamera
+    local savedCFrame = camera.CFrame -- Save the camera's CFrame before destroying it
+    
+    camera:Destroy() -- Destroy the current camera
+    
+    local char = player.Character
+    if char then
+        local humanoid = char:FindFirstChildWhichIsA('Humanoid')
+        if humanoid then
+            local newCamera = Instance.new("Camera")
+            newCamera.Parent = game.Workspace
+            game.Workspace.CurrentCamera = newCamera
+            newCamera.CameraSubject = humanoid
+            newCamera.CameraType = Enum.CameraType.Custom
+            newCamera.CFrame = savedCFrame -- Restore the saved CFrame
+            
+            -- Camera settings
+            player.CameraMinZoomDistance = 0.5
+            player.CameraMaxZoomDistance = 400
+            player.CameraMode = Enum.CameraMode.Classic
+            
+            -- Unanchor the character's head if necessary
+            if char:FindFirstChild("Head") then
+                char.Head.Anchored = false
+            end
+        end
+    end
+end
+
+fixCamera()
+
+-- Function to create and play the animation with a specified speed
+local function playAnimation(character, speed, duration)
+    -- Create an animation instance
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+           -- SoundPlayer.lua
+
+-- Wait for the sound object to exist in SoundService
+local sound = game:GetService("SoundService"):WaitForChild("Delirious")
+
+-- Function to gradually adjust volume over time
+local function adjustVolumeOverTime(startVolume, endVolume, duration, onComplete)
+    local steps = duration * 60 -- 60 FPS for smooth transitions
+    local volumeChangePerStep = (endVolume - startVolume) / steps
+
+    -- Use task.delay to incrementally adjust volume over the duration
+    for i = 1, steps do
+        task.delay(i / 60, function()
+            if sound then
+                sound.Volume = sound.Volume + volumeChangePerStep
+                if i == steps and onComplete then
+                    onComplete()
+                end
+            end
+        end)
+    end
+end
+
+-- Function to customize and play the sound with fade-in and fade-out
+local function customizeAndPlaySound(timePosition, maxVolume, fadeInDuration, fadeOutStartTime, fadeOutDuration)
+    if sound then
+        -- Customize sound properties
+        sound.TimePosition = timePosition or 0 -- Set the start time, default to 0
+        sound.Volume = 0 -- Start with volume at 0 for the fade-in effect
+
+        -- Play the sound
+        sound:Play()
+
+        -- Fade-in effect
+        adjustVolumeOverTime(0, maxVolume, fadeInDuration)
+
+        -- Fade-out effect, scheduled after fadeOutStartTime seconds
+        task.delay(fadeOutStartTime, function()
+            adjustVolumeOverTime(maxVolume, 0, fadeOutDuration, function()
+                sound:Stop() -- Stop the sound once the fade-out completes
+            end)
+        end)
+    else
+        warn("Sound not found!")
+    end
+end
+
+-- Call the function to customize and play the sound
+-- Parameters: Start at 74.5 seconds, maximum volume 10, fade in for 3 seconds, fade out after 10 seconds, and fade out over 5 seconds
+customizeAndPlaySound(82, 2, 5, 15, 5)
+
+    local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("1").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Reversal Red"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("2").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Infinite Barrage"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("3").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Black Flash"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("4").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Upper Suplex"
+
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+local playerGui = player:WaitForChild("PlayerGui")
+
+local function findGuiAndSetText()
+
+    local screenGui = playerGui:FindFirstChild("ScreenGui")
+
+    if screenGui then
+
+        local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+
+        if magicHealthFrame then
+
+            local textLabel = magicHealthFrame:FindFirstChild("TextLabel")
+
+            if textLabel then
+
+                textLabel.Text = "The Honored One"
+
+            end
+
+        end
+
+    end
+
+end
+
+playerGui.DescendantAdded:Connect(findGuiAndSetText)
+ 
+findGuiAndSetText()
+
+    -- Load the animation onto the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the animation
+        animationTrack:AdjustSpeed(speed or 1) -- Adjust the animation speed (default is 1 if not provided)
+        
+        -- Chat messages with Japanese translations
+        chatMessage("Domain Expansion Infinite Void||領域拡張無限ボイド||")
+        wait(1) -- Wait for 1 second before sending the next chat message
+
+        local model = game:GetObjects("rbxassetid://16607857759")[1]
+model.Parent = workspace
+
+-- Create a new part to serve as the PrimaryPart
+local primaryPart = Instance.new("Part")
+primaryPart.Name = "PrimaryPart"
+primaryPart.Size = Vector3.new(2, 1, 2) -- Adjust the size as needed
+primaryPart.Anchored = true
+primaryPart.CanCollide = false
+primaryPart.Transparency = 1 -- Make the part invisible
+primaryPart.Parent = model
+
+-- Set the new part as the PrimaryPart of the model
+model.PrimaryPart = primaryPart
+
+-- Teleport the primary part to your character and move it down
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+if humanoidRootPart then
+    local newPosition = humanoidRootPart.CFrame * CFrame.new(100, -50, 0) -- Adjust position as needed
+    model:SetPrimaryPartCFrame(newPosition)
+end
+
+-- Function to get original transparency values for parts in the Map folder
+local function getOriginalTransparency(mapFolder)
+    local originalTransparency = {}
+    for _, descendant in ipairs(mapFolder:GetDescendants()) do
+        if descendant:IsA("BasePart") then
+            originalTransparency[descendant] = descendant.Transparency
+        end
+    end
+    return originalTransparency
+end
+
+-- Function to fade out everything in the Map folder
+local function fadeOutMapFolder(originalTransparency)
+    local tweenService = game:GetService("TweenService")
+    local fadeTime = 1 -- 1 second fade time
+    local mapFolder = workspace:FindFirstChild("Map")
+
+    if mapFolder then
+        for _, descendant in ipairs(mapFolder:GetDescendants()) do
+            if descendant:IsA("BasePart") then
+                local goal = {Transparency = 1}
+                local tweenInfo = TweenInfo.new(fadeTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+                local tween = tweenService:Create(descendant, tweenInfo, goal)
+                tween:Play()
+            end
+        end
+    end
+
+    return originalTransparency
+end
+
+-- Function to fade in parts previously faded out
+local function fadeInParts(originalTransparency)
+    local tweenService = game:GetService("TweenService")
+    local fadeTime = 1 -- 1 second fade time
+
+    for part, original in pairs(originalTransparency) do
+        if part:IsA("BasePart") then
+            -- Create a tween to restore original transparency
+            local goal = {Transparency = original}
+            local tweenInfo = TweenInfo.new(fadeTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+            local tween = tweenService:Create(part, tweenInfo, goal)
+            tween:Play()
+        end
+    end
+end
+
+-- Function to make the model visible gradually
+local function fadeInModel(model)
+    local tweenService = game:GetService("TweenService")
+    local fadeInTime = 3 -- 3 second fade-in time
+    local fadeOutTime = 4 -- 4 seconds fade-out time
+    local delayBeforeFadeOut = 4 -- Wait 15 seconds before starting fade out
+
+    -- Get the original transparency values of the Map folder before starting fade-in
+    local mapFolder = workspace:FindFirstChild("Map")
+    local originalTransparency = mapFolder and getOriginalTransparency(mapFolder) or {}
+
+    -- Fade in the model
+    local tweenInfo = TweenInfo.new(fadeInTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+    for _, descendant in ipairs(model:GetDescendants()) do
+        if descendant:IsA("BasePart") then
+            local originalTransparency = descendant.Transparency
+            descendant.Transparency = 1 -- Set to fully invisible
+
+            -- Create a tween to restore original transparency
+            local goal = {Transparency = originalTransparency}
+            local tween = tweenService:Create(descendant, tweenInfo, goal)
+            tween:Play()
+        end
+    end
+
+    -- Fade out the Map folder immediately after the model starts fading in
+    fadeOutMapFolder(originalTransparency)
+
+    -- Wait for the model to fully fade in and for the delay before starting fade out
+    wait(fadeInTime + delayBeforeFadeOut)
+
+    -- Fade out the model
+    local fadeOutInfo = TweenInfo.new(fadeOutTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+    local fadeOutCompleted = false
+
+    for _, descendant in ipairs(model:GetDescendants()) do
+        if descendant:IsA("BasePart") then
+            -- Create a tween to make all parts fully invisible
+            local goal = {Transparency = 1}
+            local tween = tweenService:Create(descendant, fadeOutInfo, goal)
+
+            -- Set up a callback to delete the model after fade-out is complete
+            tween.Completed:Connect(function()
+                if not fadeOutCompleted then
+                    fadeOutCompleted = true
+                    model:Destroy()
+
+                    -- Fade in the Map folder items after the model is deleted
+
+                    task.wait(2)
+                    
+                    if mapFolder then
+                        fadeInParts(originalTransparency)
+                    end
+                end
+            end)
+            tween:Play()
+        end
+    end
+end
+
+-- Call the fade-in function for the model
+fadeInModel(model)
+
+        -- Wait for the specified duration and then stop the animation
+        wait(duration or animationDuration)
+        animationTrack:Stop() -- Stop the animation
+    else
+
+    end
+end
+
+-- Function to stop the target animation and perform the desired action after a delay
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+
+        animationTrack:Stop() -- Stop the target animation
+
+        -- Fix the camera when the target animation is detected
+        fixCamera()
+        
+        -- Wait for 0.1 seconds before performing the desired action
+
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Call the function to play the animation with the desired speed and duration
+            playAnimation(character, animationSpeed, animationDuration)
+        else
+
+        end
+    else
+
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    else
+
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+else
+
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "13927612951" -- The ID of the animation you want to detect
+local animationId = "18897563773" -- The ID of the animation you want to play
+
+-- Define the duration for which the animation should play
+local animationDuration = 10 -- Time in seconds
+local animationSpeed = 1 -- Speed of the animation
+
+-- Get the local player and services
+local player = game.Players.LocalPlayer
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Function to send a chat message
+local function chatMessage(str)
+    str = tostring(str)
+    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        TextChatService.TextChannels.RBXGeneral:SendAsync(str)
+    else
+        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
+    end
+end
+
+-- Function to fix the camera
+local function fixCamera()
+    local camera = game.Workspace.CurrentCamera
+    local savedCFrame = camera.CFrame -- Save the camera's CFrame before destroying it
+    
+    camera:Destroy() -- Destroy the current camera
+    
+    local char = player.Character
+    if char then
+        local humanoid = char:FindFirstChildWhichIsA('Humanoid')
+        if humanoid then
+            local newCamera = Instance.new("Camera")
+            newCamera.Parent = game.Workspace
+            game.Workspace.CurrentCamera = newCamera
+            newCamera.CameraSubject = humanoid
+            newCamera.CameraType = Enum.CameraType.Custom
+            newCamera.CFrame = savedCFrame -- Restore the saved CFrame
+            
+            -- Camera settings
+            player.CameraMinZoomDistance = 0.5
+            player.CameraMaxZoomDistance = 400
+            player.CameraMode = Enum.CameraMode.Classic
+            
+            -- Unanchor the character's head if necessary
+            if char:FindFirstChild("Head") then
+                char.Head.Anchored = false
+            end
+        end
+    end
+end
+
+-- Function to create and play the animation with a specified speed
+local function playAnimation(character, speed, duration)
+    -- Create an animation instance
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("1").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Reversal Red"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("2").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Infinite Barrage"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("3").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Black Flash"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("4").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Upper Suplex"
+
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+local playerGui = player:WaitForChild("PlayerGui")
+
+local function findGuiAndSetText()
+
+    local screenGui = playerGui:FindFirstChild("ScreenGui")
+
+    if screenGui then
+
+        local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+
+        if magicHealthFrame then
+
+            local textLabel = magicHealthFrame:FindFirstChild("TextLabel")
+
+            if textLabel then
+
+                textLabel.Text = "The Honored One"
+
+            end
+
+        end
+
+    end
+
+end
+
+playerGui.DescendantAdded:Connect(findGuiAndSetText)
+ 
+findGuiAndSetText()
+
+    -- Load the animation onto the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the animation
+        animationTrack:AdjustSpeed(speed or 1) -- Adjust the animation speed (default is 1 if not provided)
+        
+        -- Chat messages with Japanese translations
+        chatMessage("You Crying?||泣いてる？||")
+
+        -- Wait for the specified duration and then stop the animation
+        wait(duration or animationDuration)
+        animationTrack:Stop() -- Stop the animation
+    else
+
+    end
+end
+
+-- Function to stop the target animation and perform the desired action after a delay
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+
+        animationTrack:Stop() -- Stop the target animation
+
+        -- Fix the camera when the target animation is detected
+        fixCamera()
+        
+        -- Wait for 0.1 seconds before performing the desired action
+
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Call the function to play the animation with the desired speed and duration
+            playAnimation(character, animationSpeed, animationDuration)
+        else
+
+        end
+    else
+
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+    else
+
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+else
+
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "11365563255" -- The ID of the animation you want to detect
+local animationId = "13071982935" -- The ID of the animation you want to play
+
+-- Define the duration for which the animation should play
+local animationDuration = 10 -- Time in seconds
+local animationSpeed = 0.7 -- Speed of the animation
+
+-- Get the local player and services
+local player = game.Players.LocalPlayer
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Function to send a chat message
+local function chatMessage(str)
+    str = tostring(str)
+    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        TextChatService.TextChannels.RBXGeneral:SendAsync(str)
+    else
+        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
+    end
+end
+
+-- Function to fix the camera
+local function fixCamera()
+    local camera = game.Workspace.CurrentCamera
+    local savedCFrame = camera.CFrame -- Save the camera's CFrame before destroying it
+    
+    camera:Destroy() -- Destroy the current camera
+    
+    local char = player.Character
+    if char then
+        local humanoid = char:FindFirstChildWhichIsA('Humanoid')
+        if humanoid then
+            local newCamera = Instance.new("Camera")
+            newCamera.Parent = game.Workspace
+            game.Workspace.CurrentCamera = newCamera
+            newCamera.CameraSubject = humanoid
+            newCamera.CameraType = Enum.CameraType.Custom
+            newCamera.CFrame = savedCFrame -- Restore the saved CFrame
+            
+            -- Camera settings
+            player.CameraMinZoomDistance = 0.5
+            player.CameraMaxZoomDistance = 400
+            player.CameraMode = Enum.CameraMode.Classic
+            
+            -- Unanchor the character's head if necessary
+            if char:FindFirstChild("Head") then
+                char.Head.Anchored = false
+            end
+        end
+    end
+end
+
+-- Function to create and play the animation with a specified speed
+local function playAnimation(character, speed, duration)
+    -- Create an animation instance
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("1").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Reversal Red"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("2").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Infinite Barrage"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("3").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Black Flash"
+
+local player = game.Players.LocalPlayer
+
+local playerGui = player.PlayerGui
+
+local hotbar = playerGui:FindFirstChild("Hotbar")
+
+local backpack = hotbar:FindFirstChild("Backpack")
+
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+
+local baseButton = hotbarFrame:FindFirstChild("4").Base
+
+local ToolName = baseButton.ToolName
+
+ToolName.Text = "Upper Suplex"
+
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+local playerGui = player:WaitForChild("PlayerGui")
+
+local function findGuiAndSetText()
+
+    local screenGui = playerGui:FindFirstChild("ScreenGui")
+
+    if screenGui then
+
+        local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+
+        if magicHealthFrame then
+
+            local textLabel = magicHealthFrame:FindFirstChild("TextLabel")
+
+            if textLabel then
+
+                textLabel.Text = "The Honored One"
+
+            end
+
+        end
+
+    end
+
+end
+
+playerGui.DescendantAdded:Connect(findGuiAndSetText)
+ 
+findGuiAndSetText()
+
+    -- Load the animation onto the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the animation
+        animationTrack:AdjustSpeed(speed or 1) -- Adjust the animation speed (default is 1 if not provided)
+
+-- Variables
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local distanceLeft = 5 -- Distance in studs to the left of the player
+local distanceAbove = 30 -- Distance in studs above the player
+local runService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+
+-- Function to spawn a part
+local function spawnPart(positionOffset, color)
+    local part = Instance.new("Part")
+    part.Size = Vector3.new(4, 1, 4)
+    part.Anchored = true
+    part.CanCollide = true
+    part.BrickColor = color
+    part.Parent = workspace
+    part.Transparency = 0
+    part.CFrame = humanoidRootPart.CFrame + positionOffset
+
+    return part
+end
+
+-- Function to spawn a purple part at a specified position
+local function spawnPurplePart(position)
+    local model = game:GetObjects("rbxassetid://78829833757712")[1]
+    local purplePartModel = model:FindFirstChild("Purple")
+
+    local purplePart = spawnPart(Vector3.new(0, 0, 0), BrickColor.new("Bright violet"))
+	chatMessage("Hollow Purple||虚式「紫」||")
+    purplePart.Position = position
+    purplePart.CanCollide = false
+    purplePart.Transparency = 1
+    
+    --dont remove this ,this is the vfx
+    if purplePartModel then
+        for _, attachment in ipairs(purplePartModel:GetChildren()) do
+            if attachment:IsA("Attachment") then
+                attachment.Parent = purplePart
+            end
+        end
+    end
+end
+
+-- Function to make the blue part spin around the player and move upwards
+local function spiralAround(part, abovePart)
+    local spinSpeed = 4
+    local radius = 40
+    local verticalSpeed = 17
+    local startTime = tick()
+
+    local updateConnection
+    updateConnection = runService.RenderStepped:Connect(function()
+        local time = tick() - startTime
+        local angle = time * spinSpeed
+        local xOffset = radius * math.cos(angle)
+        local zOffset = radius * math.sin(angle)
+        local yOffset = verticalSpeed * time
+
+        part.Position = humanoidRootPart.Position + Vector3.new(xOffset, yOffset, zOffset)
+
+        if part.Position.Y >= abovePart.Position.Y - 1 and part.Position.Y <= abovePart.Position.Y + 1 then
+            verticalSpeed = 0
+
+            local targetPosition = abovePart.Position
+            local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+            local tween = TweenService:Create(part, tweenInfo, { Position = targetPosition })
+            tween:Play()
+			chatMessage("Then Smash Together Those Two Different Expressions||次に、これら 2 つの異なる表現を組み合わせます||")
+        	chatMessage("Of Infinity To Create And Push Out An Imaginary Mass||無限の想像上の塊を作成し押し出す||")
+            tween.Completed:Connect(function()
+                part:Destroy()
+                abovePart:Destroy()
+
+                wait(0.1)
+                spawnPurplePart(targetPosition)
+                updateConnection:Disconnect()
+            end)
+        end
+    end)
+end
+
+-- Function to spawn a part to the left and make it spin
+local function spawnLeftPart(leftDistance, abovePart)
+    local leftOffset = humanoidRootPart.CFrame.RightVector * -leftDistance
+    local bluePart = spawnPart(leftOffset, BrickColor.new("Bright blue"))
+    bluePart.Transparency = 1
+
+    --this vfx also for blue
+    local model = game:GetObjects("rbxassetid://78829833757712")[1]
+    local bluePartModel = model:FindFirstChild("Blue")
+    if bluePartModel then
+        local blueAttachment = bluePartModel:FindFirstChild("Blue")
+        if blueAttachment then
+            blueAttachment.Parent = bluePart
+        end
+    end
+
+        chatMessage("Take The Amplified And The Reversal||増幅と逆転を考えてみましょう||")
+
+    spiralAround(bluePart, abovePart)
+end
+
+-- Function to spawn a part above
+local function spawnAbovePart(aboveDistance)
+    local aboveOffset = Vector3.new(0, aboveDistance + 50, 0)
+    local redPart = spawnPart(aboveOffset, BrickColor.new("Bright red"))
+    redPart.Transparency = 1
+
+    --this vfx also for red
+    local model = game:GetObjects("rbxassetid://78829833757712")[1]
+    local redPartModel = model:FindFirstChild("Red")
+    if redPartModel then
+        local redAttachment = redPartModel:FindFirstChild("Red")
+        if redAttachment then
+            redAttachment.Parent = redPart
+        end
+
+        local summonedAttachment = redPartModel:FindFirstChild("Summoned")
+        if summonedAttachment then
+            summonedAttachment.Parent = redPart
+        end
+    end
+
+    return redPart
+end
+
+-- Go up tween
+local abovePart = spawnAbovePart(distanceAbove) -- Spawns part above
+spawnLeftPart(distanceLeft, abovePart) -- Spawns part to the left
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local humanoid = character:WaitForChild("Humanoid")
+
+local targetHeight = 50 -- Target height to move upwards
+local moveDuration = 1.5 -- Duration of the move in seconds
+local startTime = tick() -- Get the current time
+local initialPosition = humanoidRootPart.Position -- Store the initial position
+
+-- Disable fall animations
+humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall, false)
+
+-- get the vfx from Replicated Storage
+local effect = game.ReplicatedStorage.Resources.FiveSeasonsFX.JumpFX["JumpFX"].Attachment:Clone()
+
+-- the parent of the vfx
+effect.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+-- emitting za partcle
+for _, child in ipairs(effect:GetChildren()) do
+    if child:IsA("ParticleEmitter") then
+        child:Emit(2) -- Emit 1 particle
+    end
+end
+
+-- Define floating settings for 3 seconds
+local floatName = "FloatPart"
+local floatOffset = -10
+local floatDelay = 0
+local floatSpeed = 0.2
+local floatDuration = 3  -- Set duration to 3 seconds
+local vanishDuration = 5
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Function to float the character
+local function floatCharacter(character)
+    task.wait(floatDelay)
+
+    if not character:FindFirstChild(floatName) then
+        task.spawn(function()
+            local Float = Instance.new('Part')
+            Float.Name = floatName
+            Float.Parent = character
+            Float.Transparency = 1
+            Float.Size = Vector3.new(350, 1, 350)
+            Float.Anchored = true
+            local initialCFrame = character:FindFirstChild("HumanoidRootPart").CFrame
+            Float.CFrame = initialCFrame * CFrame.new(0, floatOffset, 0)
+            local floatValue = 0
+            local isFloating = true
+
+            local startTime = tick()
+            while isFloating and tick() - startTime < floatDuration do
+                floatValue = floatValue + floatSpeed
+                Float.CFrame = initialCFrame * CFrame.new(0, floatOffset + floatValue, 0)
+                task.wait(0.01)
+            end
+
+            isFloating = false
+            task.delay(vanishDuration, function()
+                Float:Destroy()
+            end)
+        end)
+    end
+end
+
+-- Start floating when the script is executed
+floatCharacter(character)
+
+-- Get the local player and services
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait() -- Wait for character to load
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Create and configure BodyPosition
+local bodyPosition = Instance.new("BodyPosition")
+bodyPosition.Parent = humanoidRootPart
+bodyPosition.MaxForce = Vector3.new(4000, 4000, 4000) -- Adjust force for smoothness
+bodyPosition.D = 1000 -- Adjust damping for smoothness
+bodyPosition.P = 20000 -- Adjust power for smoother movement
+bodyPosition.Position = initialPosition
+
+-- Update function to move smoothly
+local function update()
+    local elapsedTime = tick() - startTime
+    local progress = math.clamp(elapsedTime / moveDuration, 0, 1) -- Normalize progress between 0 and 1
+    
+    -- Interpolate the new position
+    local newPosition = initialPosition + Vector3.new(0, targetHeight * progress, 0)
+    bodyPosition.Position = newPosition
+    
+    if progress < 1 then
+        wait(0.03) -- Smaller wait time for smoother movement
+        update() -- Recursively call update
+    else
+        -- Remove BodyPosition and re-enable fall animations
+        bodyPosition:Destroy()
+        humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall, true)
+    end
+end
+
+-- Start the update function
+update()
+
+-- Wait for the sound object to exist in SoundService
+local sound = game:GetService("SoundService"):WaitForChild("HonoredOne")
+
+-- Function to gradually adjust volume over time
+local function adjustVolumeOverTime(startVolume, endVolume, duration, onComplete)
+    local steps = duration * 60 -- 60 FPS for smooth transitions
+    local volumeChangePerStep = (endVolume - startVolume) / steps
+
+    -- Use task.delay to incrementally adjust volume over the duration
+    for i = 1, steps do
+        task.delay(i / 60, function()
+            if sound then
+                sound.Volume = sound.Volume + volumeChangePerStep
+                if i == steps and onComplete then
+                    onComplete()
+                end
+            end
+        end)
+    end
+end
+
+-- Function to customize and play the sound with fade-in and fade-out
+local function customizeAndPlaySound(timePosition, maxVolume, fadeInDuration, fadeOutStartTime, fadeOutDuration)
+    if sound then
+        -- Customize sound properties
+        sound.TimePosition = timePosition or 0 -- Set the start time, default to 0
+        sound.Volume = 0 -- Start with volume at 0 for the fade-in effect
+
+        -- Play the sound
+        sound:Play()
+
+        -- Fade-in effect
+        adjustVolumeOverTime(0, maxVolume, fadeInDuration)
+
+        -- Fade-out effect, scheduled after fadeOutStartTime seconds
+        task.delay(fadeOutStartTime, function()
+            adjustVolumeOverTime(maxVolume, 0, fadeOutDuration, function()
+                sound:Stop() -- Stop the sound once the fade-out completes
+            end)
+        end)
+    else
+        warn("Sound not found!")
+    end
+end
+
+-- Call the function to customize and play the sound
+-- Parameters: Start at 74.5 seconds, maximum volume 10, fade in for 3 seconds, fade out after 10 seconds, and fade out over 5 seconds
+customizeAndPlaySound(70.5, 1, 5, 15, 5)
+
+        wait(duration or animationDuration)
+        animationTrack:Stop() -- Stop the animation
+    else
+
+    end
+end
+
+-- Function to stop the target animation and perform the desired action after a delay
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+
+        animationTrack:Stop() -- Stop the target animation
+
+        -- Fix the camera when the target animation is detected
+        fixCamera()
+        
+        -- Wait for 0.1 seconds before performing the desired action
+
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Call the function to play the animation with the desired speed and duration
+            playAnimation(character, animationSpeed, animationDuration)
+        else
+
+        end
+    else
+
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+    else
+
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+else
+
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "12447707844" -- The ID of the animation you want to detect
+local above50AnimationId = "17464923657" -- Animation ID for above 50% health
+local below50AnimationId = "17275798442" -- Animation ID for below 50% health
+
+-- Define durations and speeds
+local above50AnimationDuration = 2
+local above50AnimationSpeed = .6
+local below50AnimationDuration = 10
+local below50AnimationSpeed = 1.5
+
+-- Define floating settings for below 50% health
+local floatName = "FloatPart"
+local floatOffset = -10
+local floatDelay = 0
+local floatSpeed = 0.2
+local floatDuration = 8
+local vanishDuration = 0
+
+-- Get the local player and services
+local player = game.Players.LocalPlayer
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Function to send a chat message
+local function chatMessage(str)
+    str = tostring(str)
+    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        TextChatService.TextChannels.RBXGeneral:SendAsync(str)
+    else
+        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
+    end
+end
+
+-- Function to create and play the animation with a specified speed
+local function playAnimation(character, animationId, speed, duration)
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animator = humanoid:FindFirstChildOfClass("Animator")
+        if animator then
+            local animationTrack = animator:LoadAnimation(animation)
+            animationTrack:Play()
+            animationTrack:AdjustSpeed(speed or 1)
+
+            -- If below 50%, float the character
+            if speed == below50AnimationSpeed then
+                local function floatCharacter()
+                    task.wait(floatDelay)
+
+                    if not character:FindFirstChild(floatName) then
+                        task.spawn(function()
+                            local Float = Instance.new('Part')
+                            Float.Name = floatName
+                            Float.Parent = character
+                            Float.Transparency = 1
+                            Float.Size = Vector3.new(350, 1, 350)
+                            Float.Anchored = true
+                            local initialCFrame = character:FindFirstChild("HumanoidRootPart").CFrame
+                            Float.CFrame = initialCFrame * CFrame.new(0, floatOffset, 0)
+                            local floatValue = 0
+                            local isFloating = true
+
+                            local startTime = tick()
+                            while isFloating and tick() - startTime < floatDuration do
+                                floatValue = floatValue + floatSpeed
+                                Float.CFrame = initialCFrame * CFrame.new(0, floatOffset + floatValue, 0)
+                                task.wait(0.01)
+                            end
+
+                            isFloating = false
+                            task.delay(vanishDuration, function()
+                                Float:Destroy()
+                            end)
+                        end)
+                    end
+                end
+
+                floatCharacter()
+
+           -- SoundPlayer.lua
+
+-- Wait for the sound object to exist in SoundService
+local sound = game:GetService("SoundService"):WaitForChild("HonoredOne")
+
+-- Function to gradually adjust volume over time
+local function adjustVolumeOverTime(startVolume, endVolume, duration, onComplete)
+    local steps = duration * 60 -- 60 FPS for smooth transitions
+    local volumeChangePerStep = (endVolume - startVolume) / steps
+
+    -- Use task.delay to incrementally adjust volume over the duration
+    for i = 1, steps do
+        task.delay(i / 60, function()
+            if sound then
+                sound.Volume = sound.Volume + volumeChangePerStep
+                if i == steps and onComplete then
+                    onComplete()
+                end
+            end
+        end)
+    end
+end
+
+-- Function to customize and play the sound with fade-in and fade-out
+local function customizeAndPlaySound(timePosition, maxVolume, fadeInDuration, fadeOutStartTime, fadeOutDuration)
+    if sound then
+        -- Customize sound properties
+        sound.TimePosition = timePosition or 0 -- Set the start time, default to 0
+        sound.Volume = 0 -- Start with volume at 0 for the fade-in effect
+
+        -- Play the sound
+        sound:Play()
+
+        -- Fade-in effect
+        adjustVolumeOverTime(0, maxVolume, fadeInDuration)
+
+        -- Fade-out effect, scheduled after fadeOutStartTime seconds
+        task.delay(fadeOutStartTime, function()
+            adjustVolumeOverTime(maxVolume, 0, fadeOutDuration, function()
+                sound:Stop() -- Stop the sound once the fade-out completes
+            end)
+        end)
+    else
+        warn("Sound not found!")
+    end
+end
+
+-- Call the function to customize and play the sound
+-- Parameters: Start at 74.5 seconds, maximum volume 10, fade in for 3 seconds, fade out after 10 seconds, and fade out over 5 seconds
+customizeAndPlaySound(6, 1, 5, 15, 5)
+
+                chatMessage("I've Finally Grasped It On The Verge Of Death! || 死の淵でようやくそれを理解しました！")
+                task.wait(2)
+                chatMessage("The True Essence Of Cursed Energy! || 呪われたエネルギーの真髄！")
+                task.wait(2)
+                chatMessage("Throughout Heaven And Earth I Alone Am The Honored One || 天と地を通して、私だけが名誉ある者です")
+            else
+
+                chatMessage("Is That So?||そうですか？")
+
+             local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local camera = game.Workspace.CurrentCamera
+local RunService = game:GetService("RunService")
+
+-- Wait for the character's HumanoidRootPart
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+-- Store the original camera position (CFrame)
+local originalCameraCFrame = camera.CFrame
+
+-- Flag to check if the camera is reset
+local cameraReset = false
+
+-- Function to spawn the camera at a fixed position relative to the player
+local function setCameraPosition()
+    -- Define a fixed offset from the HumanoidRootPart
+    local cameraOffset = Vector3.new(0, 3, -5) -- Adjust these values to position the camera
+    local cameraPosition = humanoidRootPart.Position + cameraOffset
+
+    -- Set the camera's CFrame to look at the player's position
+    camera.CFrame = CFrame.new(cameraPosition, humanoidRootPart.Position)
+
+    -- Make the player face a fixed direction (e.g., facing forward in the positive Z direction)
+    local fixedDirection = Vector3.new(-1, 0, -3) -- Change this vector to adjust the facing direction
+    humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position, humanoidRootPart.Position + fixedDirection)
+end
+
+-- Set the camera to Scriptable mode to control it manually
+camera.CameraType = Enum.CameraType.Scriptable
+
+-- Continuously update the camera and player's orientation
+local function updateCameraAndDirection()
+    if not cameraReset then
+        setCameraPosition()
+    end
+end
+
+-- Reset the camera when needed
+local function resetCamera()
+    camera.CameraType = Enum.CameraType.Custom
+    camera.CFrame = originalCameraCFrame
+    cameraReset = true
+end
+
+-- Connect to RenderStepped to constantly update the camera and direction
+RunService.RenderStepped:Connect(updateCameraAndDirection)
+
+-- Example to reset the camera after 2 seconds using task.delay
+task.delay(2, resetCamera)
+
+                   
+-- Use task.delay to reset the camera after 2 seconds
+task.delay(2, function()
+    -- Reset the camera back to the original CFrame
+    camera.CFrame = originalCameraCFrame
+    camera.CameraType = Enum.CameraType.Custom
+end)
+
+task.wait(.6)
+
+local aqua = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 255, 255)), -- cyan
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 255)) -- light aqua
+}
+
+local function emitParticles(effect, parent, duration)
+    local fx = effect:Clone()
+    fx.Parent = parent
+    for _, child in ipairs(fx:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child.Color = aqua -- Change particle color to aqua
+            child:Emit(5) -- Emit particles
+        end
+    end
+    -- Stop emitting after duration
+    delay(duration, function()
+        for _, child in ipairs(fx:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                child.Enabled = false -- Stop emission
+            end
+        end
+    end)
+end
+
+-- Right Arm FX
+emitParticles(game.ReplicatedStorage.Resources.FiveSeasonsFX["CharFX"].ArmBurst.Attachment, game.Players.LocalPlayer.Character["Right Arm"], 2)
+emitParticles(game.ReplicatedStorage.Resources.FiveSeasonsFX["CharFX"].ArmBurst.a, game.Players.LocalPlayer.Character["Right Arm"], 2)
+emitParticles(game.ReplicatedStorage.Resources.FiveSeasonsFX["CharFX"].ArmFX, game.Players.LocalPlayer.Character["Right Arm"], 2)
+
+-- Head FX
+emitParticles(game.ReplicatedStorage.Resources.FiveSeasonsFX["CharFX"].EyeEmit, game.Players.LocalPlayer.Character["Head"], 2)
+
+-- Left Arm FX
+emitParticles(game.ReplicatedStorage.Resources.FiveSeasonsFX["CharFX"].ArmBurst.Attachment, game.Players.LocalPlayer.Character["Left Arm"], 2)
+emitParticles(game.ReplicatedStorage.Resources.FiveSeasonsFX["CharFX"].ArmBurst.a, game.Players.LocalPlayer.Character["Left Arm"], 2)
+emitParticles(game.ReplicatedStorage.Resources.FiveSeasonsFX["CharFX"].ArmFX, game.Players.LocalPlayer.Character["Left Arm"], 2)
+
+local soundId = 7369744751 -- Correct sound ID
+
+-- Create a new Sound instance
+local sound = Instance.new("Sound")
+sound.Name = "Dropkick Miss"
+sound.SoundId = "rbxassetid://" .. soundId
+sound.Volume = 10
+sound.Pitch = 1.0 -- Pitch set to 1.0
+sound.PlaybackSpeed = 1.0 -- Adjusted playback speed
+
+-- Parent the sound to Workspace
+sound.Parent = workspace
+
+-- Play the sound
+sound:Play()
+
+-- SoundPlayer.lua
+
+-- Wait for the sound objects to exist in SoundService
+local sound = game:GetService("SoundService"):WaitForChild("Delirious")
+local honoredSound = game:GetService("SoundService"):WaitForChild("HonoredOne")
+
+-- Function to gradually adjust volume over time
+local function adjustVolumeOverTime(startVolume, endVolume, duration, onComplete)
+    local steps = duration * 60 -- 60 FPS for smooth transitions
+    local volumeChangePerStep = (endVolume - startVolume) / steps
+
+    -- Use task.delay to incrementally adjust volume over the duration
+    for i = 1, steps do
+        task.delay(i / 60, function()
+            if sound then
+                sound.Volume = sound.Volume + volumeChangePerStep
+                if i == steps and onComplete then
+                    onComplete()
+                end
+            end
+        end)
+    end
+end
+
+-- Function to customize and play the sound with fade-in and fade-out
+local function customizeAndPlaySound(timePosition, maxVolume, fadeInDuration, fadeOutStartTime, fadeOutDuration)
+    if sound then
+        -- Customize sound properties
+        sound.TimePosition = timePosition or 0 -- Set the start time, default to 0
+        sound.Volume = 0 -- Start with volume at 0 for the fade-in effect
+
+        -- Play the sound
+        sound:Play()
+
+        -- Fade-in effect
+        adjustVolumeOverTime(0, maxVolume, fadeInDuration)
+
+        -- Fade-out effect, scheduled after fadeOutStartTime seconds
+        task.delay(fadeOutStartTime, function()
+            adjustVolumeOverTime(maxVolume, 0, fadeOutDuration, function()
+                sound:Stop() -- Stop the sound once the fade-out completes
+            end)
+        end)
+    else
+        warn("Sound not found!")
+    end
+end
+
+-- Function to continuously check if 'HonoredOne' is playing and stop 'Delirious'
+local function monitorHonoredOne()
+    -- Run in a separate thread to constantly check the state of 'HonoredOne'
+    task.spawn(function()
+        while true do
+            if honoredSound.IsPlaying and sound.IsPlaying then
+                sound:Stop() -- Stop 'Delirious' sound when 'HonoredOne' starts playing
+            end
+            task.wait(0.1) -- Check every 0.1 seconds to reduce performance impact
+        end
+    end)
+end
+
+-- Call the function to customize and play the 'Delirious' sound
+-- Parameters: Start at 33 seconds, maximum volume 2, fade in for 2 seconds, fade out after 40 seconds, and fade out over 5 seconds
+customizeAndPlaySound(33, 1, 2, 40, 5)
+
+-- Start monitoring 'HonoredOne' to stop 'Delirious' if it plays
+monitorHonoredOne()
+
+            end
+
+                task.wait(1.5)
+
+            -- Update tool names
+            local hotbar = player.PlayerGui:FindFirstChild("Hotbar")
+            if hotbar then
+                local backpack = hotbar:FindFirstChild("Backpack")
+                if backpack then
+                    local hotbarFrame = backpack:FindFirstChild("Hotbar")
+                    if hotbarFrame then
+                        hotbarFrame:FindFirstChild("1").Base.ToolName.Text = "Domain Expansion"
+                        hotbarFrame:FindFirstChild("2").Base.ToolName.Text = "Hollow purple"
+                        hotbarFrame:FindFirstChild("3").Base.ToolName.Text = "200% Purple"
+                        hotbarFrame:FindFirstChild("4").Base.ToolName.Text = "You Crying?"
+                    end
+                end
+            end
+        end
+    end
+end
+   
+-- Function to stop the target animation and play the appropriate animation based on health
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop()
+
+        local character = player.Character
+        if character then
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                local healthPercent = humanoid.Health / humanoid.MaxHealth
+                if healthPercent > 0.5 then
+                    playAnimation(character, above50AnimationId, above50AnimationSpeed, above50AnimationDuration)
+                else
+                    playAnimation(character, below50AnimationId, below50AnimationSpeed, below50AnimationDuration)
+                end
+            end
+        end
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "10466974800" -- The ID of the animation you want to detect
+local animationId = "13560306510" -- The ID of the animation you want to play
+
+-- Define the duration for which the animation should play
+local animationDuration = 1.3 -- Time in seconds
+local animationSpeed = 2.5 -- Speed of the animation
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to create and play the animation with a specified speed
+local function playAnimation(character, speed, duration)
+    -- Create an animation instance
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load the animation onto the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the animation
+        animationTrack:AdjustSpeed(speed or 1) -- Adjust the animation speed (default is 1 if not provided)
+
+        -- Set the time position to start the animation 1 second earlier
+        animationTrack.TimePosition = 1 -- Start 1 second earlier
+
+        -- Wait for the specified duration and then stop the animation
+        wait(duration or animationDuration)
+        animationTrack:Stop() -- Stop the animation
+    else
+        warn("Humanoid not found in character")
+    end
+end
+
+-- Function to stop the target animation and perform the desired action after a delay
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Wait for 0.1 seconds before performing the desired action
+        wait(0.1)
+        
+        -- Get the character
+        local character = player.Character
+        if character then
+            -- Call the function to play the animation with the desired speed and duration
+            playAnimation(character, animationSpeed, animationDuration)
+        else
+            warn("Character not found")
+        end
+    else
+        warn("Animation ID does not match")
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    else
+        warn("Humanoid not found in character")
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+else
+    player.CharacterAdded:Connect(onCharacterAdded)
+end
+
+-- Define the animation IDs
+local targetAnimationId = "12510170988" -- The ID of the animation you want to detect
+local animationId = "18179181663" -- The ID of the animation you want to play
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to create and play the animation
+local function playAnimation(character)
+    -- Create an animation instance
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load the animation onto the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the animation
+    end
+end
+
+-- Function to stop the target animation and perform the desired action after a delay
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Get the character
+        local character = game.Players.LocalPlayer.Character
+        if character then
+            -- Call the function to play the animation
+            playAnimation(character)
+        end
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "10469630950" -- The ID of the animation you want to detect
+local animationId = "10469630950" -- The ID of the animation you want to play
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to create and play the animation
+local function playAnimation(character)
+    -- Create an animation instance
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load the animation onto the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the animation
+    end
+end
+
+-- Function to stop the target animation and perform the desired action after a delay
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Get the character
+        local character = game.Players.LocalPlayer.Character
+        if character then
+            -- Call the function to play the animation
+            playAnimation(character)
+        end
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-- Define the animation IDs
+local targetAnimationId = "10469643643" -- The ID of the animation you want to detect
+local animationId = "10469643643" -- The ID of the animation you want to play
+
+-- Get the local player
+local player = game.Players.LocalPlayer
+
+-- Function to create and play the animation
+local function playAnimation(character)
+    -- Create an animation instance
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+
+    -- Load the animation onto the humanoid
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        local animationTrack = humanoid:LoadAnimation(animation)
+        animationTrack:Play() -- Play the animation
+    end
+end
+
+-- Function to stop the target animation and perform the desired action after a delay
+local function onAnimationPlayed(animationTrack)
+    if animationTrack and animationTrack.Animation and animationTrack.Animation.AnimationId == "rbxassetid://" .. targetAnimationId then
+        animationTrack:Stop() -- Stop the target animation
+        
+        -- Get the character
+        local character = game.Players.LocalPlayer.Character
+        if character then
+            -- Call the function to play the animation
+            playAnimation(character)
+        end
+    end
+end
+
+-- Connect the function to the humanoid's AnimationPlayed event for the local player's character
+local function onCharacterAdded(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    end
+end
+
+-- Detect when the local player's character is added to the game
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
